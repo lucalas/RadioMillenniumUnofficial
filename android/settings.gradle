@@ -1,0 +1,9 @@
+rootProject.name = 'RadioMillenniumUnofficial'
+include ':react-native-volume-controller'
+project(':react-native-volume-controller').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-volume-controller/android')
+include ':react-native-vector-icons'
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+include ':react-native-audio-streaming'
+project(':react-native-audio-streaming').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-audio-streaming/android')
+
+include ':app'
