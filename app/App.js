@@ -1,67 +1,28 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from "react";
+import {Scene, Router, Stack, Tabs} from 'react-native-router-flux';
 import { Platform, StyleSheet, Text, View, Image } from "react-native";
+import { Icon } from "react-native-elements";
 
-import RadioPlayer from "./Components/RadioPlayer";
-import { SliderVolumeController } from "react-native-volume-controller";
+import NavBar from "./Components/NavBar";
+
+import Home from "./Screens/Home";
+import FaceBook from "./Screens/FaceBook";
+import WhatsApp from "./Screens/WhatsApp";
 
 export default class App extends Component<Props> {
   render() {
-    return (
-      <View style={style.view}>
-        <View style={style.header}>
-          <Image
-            source={require("./Assets/Image/header.png")}
-            style={style.image}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={style.body}>
-          <RadioPlayer style={style.player} />
-        </View>
-
-        <View style={style.footer}>
-        </View>
-      </View>
-    );
+    return <Router>
+      <Tabs key="Tab" navBar={NavBar} tabBarPosition="bottom" activeBackgroundColor="#313232" inactiveBackgroundColor="#3e3e3e">
+          <Scene key="Home" component={Home} icon={() => {return <Icon name="home" type="font-awesome" size={35} />}}/>
+          <Scene key="FB" component={FaceBook} icon={() => {return <Icon name="facebook" type="font-awesome" size={30} />}}/>
+          <Scene key="WA" component={WhatsApp} icon={() => {return <Icon name="whatsapp" type="font-awesome" size={30} />}}/>
+      </Tabs>
+    </Router>;
   }
 }
 
 const style = StyleSheet.create({
-  image: {
-    flex: 1,
-    margin: 10
-  },
-  view: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+  appStyle: {
     backgroundColor: "#313232"
-  },
-  player: {},
-  slider: {
-    height: 30,
-    marginLeft: 7,
-    width: 100
-  },
-  header: {
-    backgroundColor: "rgba(00, 00, 00, 0.7)",
-    paddingTop: 10,
-    paddingBottom: 20,
-    flex: 2
-  },
-  body: {
-    flex: 6,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  footer: {
-    flex: 2
   }
 });
