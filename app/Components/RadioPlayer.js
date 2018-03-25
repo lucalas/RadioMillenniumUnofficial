@@ -191,7 +191,7 @@ export default class RadioPlayer extends Component<Props> {
 }
 
 // Set default value of RadioPlayer Properties
-RadioPlayer.defaultProps = { infoUpdate: 20 };
+RadioPlayer.defaultProps = { infoUpdate: Config.inforadiodelay};
 
 const styles = StyleSheet.create({
   player_container: {
