@@ -2,22 +2,21 @@ import React, { Component } from "react";
 
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
   DeviceEventEmitter,
   ImageBackground
 } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon, Text } from "react-native-elements";
 import { ReactNativeAudioStreaming } from "react-native-audio-streaming";
+import Config from 'react-native-config';
 
 /**
  * This is the Radio Millennium Radio ULR.
  */
-const RADIO_URL = "http://sr7.inmystream.info:8068/;stream.mp3";
-const RADIO_INFO_URL =
-  "https://www.inmystream.info/play/millennium/index.php?c=Radio%20Millennium";
+const RADIO_URL = Config.radiourl;
+const RADIO_INFO_URL = Config.radioinfo;
 
 // Radio status
 const PLAYING = "PLAYING";
@@ -54,7 +53,7 @@ export default class RadioPlayer extends Component<Props> {
           obj[stat.key] = stat.value;
           this.setState(obj);
         } else {
-          console.log(JSON.stringify(stat));
+          //console.log(JSON.stringify(stat));
           // Change player and icon status
           this.setState(stat);
           switch (this.state.status) {
@@ -111,13 +110,17 @@ export default class RadioPlayer extends Component<Props> {
 
   changeStatusClick() {
     switch (this.state.status) {
+      // If the status has to change and the current is playing or STREAMING
+      // we change to pause
       case PLAYING:
       case STREAMING:
         ReactNativeAudioStreaming.pause();
         break;
+      // If the status is paused we resume it
       case PAUSED:
         ReactNativeAudioStreaming.resume();
         break;
+      // If an error occured or is stopped we start the streaming
       case STOPPED:
       case ERROR:
         ReactNativeAudioStreaming.play(RADIO_URL, {
@@ -125,6 +128,7 @@ export default class RadioPlayer extends Component<Props> {
           showInAndroidNotifications: true
         });
         break;
+      // If is in buffering we stop it
       case BUFFERING:
         ReactNativeAudioStreaming.stop();
         break;
@@ -134,6 +138,7 @@ export default class RadioPlayer extends Component<Props> {
   _renderIcon() {
     let icon = null;
     switch (this.state.status) {
+      // If we have a certain status we can show the icon
       case PLAYING:
       case STREAMING:
       case PAUSED:
@@ -143,6 +148,7 @@ export default class RadioPlayer extends Component<Props> {
           <Icon name={this.state.iconStatus} type="font-awesome" size={50} />
         );
         break;
+      // If we are in a "loading" phase we have to show the buffer indicator
       case BUFFERING:
       case BUFFERING_START:
       case START_PREPARING:
@@ -163,37 +169,56 @@ export default class RadioPlayer extends Component<Props> {
   render() {
     let icon = this._renderIcon();
     return (
-      <View>
-        <ImageBackground
-          source={require("../Assets/Image/player-clean.png")}
-          style={styles.container}
-          resizeMode="contain"
-        >
-          <TouchableOpacity
-            onPress={this.changeStatusClick}
-            style={styles.player}
+      <View style={styles.player_container}>
+        <View style={styles.container}>
+          <ImageBackground
+            source={require("../Assets/Image/player-clean.png")}
+            resizeMode="contain"
+            style={styles.img_style}
           >
-            {icon}
-          </TouchableOpacity>
-        </ImageBackground>
-        <Text>{this.state.radioInfo.artist}</Text>
-        <Text>{this.state.radioInfo.title}</Text>
+            <TouchableOpacity onPress={this.changeStatusClick} style={styles.player}>
+              {icon}
+            </TouchableOpacity>
+          </ImageBackground>
+        </View>
+        <View style={styles.info_player}>
+          <Text style={styles.text_info_player} h4>{this.state.radioInfo.artist}</Text>
+          <Text style={styles.text_info_player} h4>{this.state.radioInfo.title}</Text>
+        </View>
       </View>
     );
   }
 }
 
+// Set default value of RadioPlayer Properties
 RadioPlayer.defaultProps = { infoUpdate: 20 };
 
 const styles = StyleSheet.create({
+  player_container: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "stretch"
+  },
   container: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  img_style: {
     width: 180,
     height: 180
   },
   player: {
-    flex: 1,
+    flex:1,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "stretch"
+  },
+  info_player: {
+    marginTop:30,
+    backgroundColor: "#272626",
+    alignItems:"stretch"
+  },
+  text_info_player: {
+    alignSelf:"center"
   }
 });

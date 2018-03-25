@@ -8,8 +8,8 @@ export default class Home extends Component<Props> {
   render() {
     return (
       <View style={style.view}>
-        <View style={style.body}>
-          <RadioPlayer style={style.player} />
+        <View>
+          <RadioPlayer />
         </View>
       </View>
     );
@@ -20,7 +20,7 @@ export default class Home extends Component<Props> {
 const style = StyleSheet.create({
   view: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
     backgroundColor: "#464848"
   },

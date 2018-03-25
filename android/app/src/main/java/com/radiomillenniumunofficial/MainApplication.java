@@ -3,6 +3,7 @@ package com.radiomillenniumunofficial;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.tavernari.volumecontroller.ReactNativeVolumeControllerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.audioStreaming.ReactNativeAudioStreamingPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeConfigPackage(),
             new ReactNativeVolumeControllerPackage(),
             new VectorIconsPackage(),
             new ReactNativeAudioStreamingPackage()
