@@ -1,9 +1,9 @@
 # RadioMillennium Unofficial App
 
-React-native App to listen an italian radio named Radio Millennium.
+React-native App to listen to an italian radio station named Radio Millennium.
 
-## Why did you do that?
+## Why would you make this?
 
-... it's a good question, the reason is I don't like the official app and I decided to create a better one and I want to learn something about React-Native.
+… This is a good question; The reason is, I don't like the official app and I decided to create a better one and I want to learn something about React-Native.
 
 That's all. For fun.
